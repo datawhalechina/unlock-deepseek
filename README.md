@@ -1,35 +1,61 @@
-# 项目名称
+# Unlock-DeepSeek
 
-*这里写项目的各类介绍信息、背景、动机等内容*
+面向广泛 AI 研究爱好者群体的 DeepSeek 系列工作解读、扩展和复现，致力于传播 DeepSeek 在 AGI 实践之路上的创新性成果，并提供从 0 代码实现，打造 LLM 前沿技术教学项目
 
-## 项目受众
+### 项目受众
 
-*注：这里写你的项目所面向的受众，本项目能给他们带来什么，对他们的基础能力要求有哪些*
+- 有大语言模型相关概念基础，具有大学数理能力的初学者
+- 希望进一步了解深度推理的学习者
+- 希望将推理模型运用到实际工作中的从业人员
+
+### 项目亮点
+
+我们将 DeepSeek-R1 及其系列工作拆分为三个重要部分：
+- MoE
+- Reasoning Models
+- 关键要素 Keys（Data、Infra、...）
+
+与大众的关注性价比优势不同，我们关注 DeepSeek 在实践 AGI 之路的创新性工作，致力于将 DeepSeek 现有公开工作细分拆解，向更广泛的 AI 研究爱好者讲述清楚其中的创新方法细节，同时我们会对比介绍同期其他类似工作（如 Kimi-K1.5），呈现 AGI 之路的不同可能性
+
+我们也将结合其他社区的工作，探索 DeepSeek-R1 的复现方案，提供中文复现教程
 
 ## 目录
-*这里写你的项目目录，已完成的部分用添加上跳转链接*
-- [第1章](https://github.com/datawhalechina/repo-template/blob/main/docs/chapter1/chapter1.md)
-- [第2章](https://github.com/datawhalechina/repo-template/blob/main/docs/chapter2)
-  - [2.1 我是2.1的标题](https://github.com/datawhalechina/repo-template/blob/main/docs/chapter2/chapter2_1.md)
-  - [2.2 我是2.2的标题](https://github.com/datawhalechina/repo-template/blob/main/docs/chapter2/chapter2_2.md)
-- [第3章](https://github.com/datawhalechina/repo-template/blob/main/docs/chapter3)
-  - [3.1 我是3.1的标题](https://github.com/datawhalechina/repo-template/blob/main/docs/chapter3/chapter3_1)
-    - [3.1.1 我是3.1.1的标题](https://github.com/datawhalechina/repo-template/blob/main/docs/chapter3/chapter3_1/chapter3_1_1.md)
-    - [3.1.2 我是3.1.2的标题](https://github.com/datawhalechina/repo-template/blob/main/docs/chapter3/chapter3_1/chapter3_1_2.md)
-  - 3.2 我是3.2的标题
-- 第4章
-  - 4.1 我是4.1的标题
-  - 4.2 我是4.2的标题
+1. MoE: DeepSeek 所坚持的架构
+    1. DeepSeek-R1 蒸馏模型（Qwen）的部署（self-llm/DeepSeek-R1-Distill-Qwen）
+    2. MoE 历史脉络回顾
+    3. MoE 从 0 实现（tiny-universe/Tiny MoE）
+    4. [多个小节] DeepSeek 模型中的 MoE 设计解读（带实现）
+2. Reasoning Models: DeepSeek-R1 的关键技术
+    1. 推理模型介绍
+        1. LLM and Reasoning
+        2. 推理效果可视化
+        3. OpenAI-o1与Inference Scaling Law
+        4. Qwen-QwQ and Qwen-QVQ
+        5. DeepSeek-R1 and DeepSeek-R1-Zero
+        6. Kimi-K1.5
+    2. 推理模型关键算法原理（`2.1 推理模型介绍`里涉及的技术尽量都覆盖到）
+        1. CoT，ToT，GoT
+        2. 蒙特卡洛树搜索 MCTS
+        3. 强化学习概念速览
+        4. DPO、PPO、GRPO
+        5. ...
 
+3. [实验性] Keys: DeepSeek 为什么便宜又好用
+
+    由于缺失大量资料，这部分只能尽力而为
+    -   Data
+    -   Infra
+    -   Trick
+    -   Distill
+    -   ...
+    
 ## 贡献者名单
 
 | 姓名 | 职责 | 简介 |
 | :----| :---- | :---- |
-| 小明 | 项目负责人 | 一个理想主义者 |
-| 小红 | 第1章贡献者 | 小明的朋友 |
-| 小强 | 第2章贡献者 | 小明的朋友 |
+| 骆秀韬 | 项目负责人 | 湖北第二师范学院 |
+| 姜舒凡 | 项目负责人 | |
 
-*注：表头可自定义，但必须在名单中标明项目负责人*
 
 ## 参与贡献
 
