@@ -1,0 +1,44 @@
+# 模型参数
+model_name_or_path: <你的模型存放的路径，比如：models/Qwen/Qwen2.5-3B-Instruct>
+model_revision: main
+torch_dtype: bfloat16
+attn_implementation: flash_attention_2
+bf16: true
+tf32: true
+output_dir: <你想要模型输出的路径，比如 output/Datawhale-R1>
+
+# 数据集参数
+dataset_id_or_path: <你的数据集存放的路径，比如：dataset>
+
+# Swanlab 训练流程记录参数
+swanlab: true # 是否开启 Swanlab 
+workspace: <用户名>
+project: <项目名，整个复现项目的名称，例如：Datawhale-R1-by_xxx>
+experiment_name: <实验名，某次超参数运行的自定义名称，例如：qwen2.5-3B-lr:5e-7_beta:0.001>
+
+# 训练参数
+max_steps: 450 # 最大训练步长
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 8
+gradient_checkpointing: true
+gradient_checkpointing_kwargs:
+  use_reentrant: false
+learning_rate: 5.0e-7 # 学习率，调整过，参见下文介绍
+lr_scheduler_type: cosine # 学习率衰减方案
+warmup_ratio: 0.03 # 学习率预热比率（对于整个步长），好用！
+seed: 2025 # 随机种子，方便实验复现
+
+# GRPO 算法参数
+beta: 0.001 # KL 惩罚因子，调整过，参见下文介绍
+max_prompt_length: 256 # 输入 prompt 最大长度，本实验基本不会有太大变化
+max_completion_length: 4096 # 输出回答长度，包含推理思维链，设为 4K 比较合适
+num_generations: 8
+use_vllm: true # 启用 vllm 来加速推理
+vllm_device: <计算卡编号，例如：cuda:2> # 留出一张卡来启用 vllm 推理，参见下文介绍
+vllm_gpu_memory_utilization: 0.5
+
+# Logging arguments
+logging_strategy: steps
+logging_steps: 1
+save_strategy: "steps"
+save_steps: 50 # 每隔多少步保存一次
