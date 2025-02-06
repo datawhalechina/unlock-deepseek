@@ -20,7 +20,7 @@ nav:
     - Reasoning Models: 
         - 蒙特卡洛树搜索MCTS: Reasoning_Models/蒙特卡洛树搜索MCTS.md
     - Keys:
-        - DeepSeek成本为什么这么低: Keys/DeepSeek成本为什么这么低/README.m
+        - DeepSeek成本为什么这么低: Keys/DeepSeek成本为什么这么低/README.md
     - 关于 Datawhale: https://datawhale.cn/
 
 theme:
