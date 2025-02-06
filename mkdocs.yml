@@ -15,6 +15,12 @@ copyright: "Copyright &copy; 2025 Datawhale Unlock-DeepSeek Team"
 # Contents
 nav:
     - 项目介绍: index.md
+    - MoE:
+        - MoE历史脉络回顾: MoE/MoE历史脉络回顾.md
+    - Reasoning Models: 
+        - 蒙特卡洛树搜索MCTS: Reasoning_Models/蒙特卡洛树搜索MCTS.md
+    - Keys:
+        - DeepSeek成本为什么这么低: Keys/DeepSeek成本为什么这么低/README.m
     - 关于 Datawhale: https://datawhale.cn/
 
 theme:
