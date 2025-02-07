@@ -147,39 +147,6 @@ def equation_reward_func(completions, target, nums, **kwargs):
 
     return rewards
 
-def thought_len_reward_func(completions, **kwargs):
-    """
-    思考长度奖励函数，检查 <think> 标签的长度是否大于 1000
-
-    参数:
-        completions (list[str]): 生成的输出
-    返回:
-        list[float]: 奖励分数
-    """
-    # 初始化奖励列表
-    rewards = []
-    # 遍历生成的输出
-    for completion in completions:
-        try:
-            # 在生成的输出前添加 <think> 标签，便于后续正则表达式匹配
-            completion = "<think>" + completion
-            # 定义正则表达式模式，用于匹配 <think> 标签
-            match = re.search(r"<think>(.*?)</think>", completion)
-            # 如果匹配到 <think> 标签
-            if match:
-                thought_process = match.group(1).strip()  # 提取 <think> 标签中的内容
-                thought_length = len(thought_process)  # 计算思考过程的长度
-                if thought_length > 1000:
-                    rewards.append(1.0)  # 如果思考过程长度大于 1000，奖励为 1
-                else:
-                    rewards.append(0.0)  # 否则奖励为 0
-            else:
-                rewards.append(0.0)  # 如果没有匹配到 <think> 标签，奖励为 0
-                continue
-        except Exception:
-            rewards.append(0.0)  # 如果发生异常，奖励为 0
-
-    return rewards
 
 def get_checkpoint(training_args: GRPOConfig):
     """
@@ -274,7 +241,6 @@ def grpo_function(
         reward_funcs=[
             format_reward_func,  # 格式奖励函数
             equation_reward_func,  # 方程奖励函数
-            thought_len_reward_func,  # 思考长度奖励函数
         ],
         args=training_args,
         train_dataset=train_dataset,
