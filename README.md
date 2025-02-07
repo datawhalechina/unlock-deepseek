@@ -1,6 +1,24 @@
 # Unlock-DeepSeek
 
-面向广泛 AI 研究爱好者群体的 DeepSeek 系列工作解读、扩展和复现，致力于传播 DeepSeek 在 AGI 实践之路上的创新性成果，并提供从 0 代码实现，打造 LLM 前沿技术教学项目
+<p align="center"> <img src="https://avatars.githubusercontent.com/u/46047812?s=200&v=4" style="width: 40%;" id="title-icon">  </p>
+<p align="center" style="display: flex; flex-direction: row; justify-content: center; align-items: center">
+<!-- <a href="" target="_blank" style="margin-left: 6px">🤗</a> <a href="https://modelscope.cn/models/linjh1118/WidsoMenter-8B/summary" target="_blank" style="margin-left: 6px">HuggingFace</a>  • | 
+<a href="" target="_blank" style="margin-left: 10px">🤖</a> <a href="https://modelscope.cn/models/linjh1118/WidsoMenter-8B/summary" target="_blank" style="margin-left: 6px">ModelScope</a>  • |
+<a href="" target="_blank" style="margin-left: 10px">📃</a> <a href="./resources/WisdoMentor_tech_report.pdf" target="_blank" style="margin-left: 6px">[Wisdom-8B @ arxiv]</a>
+  
+</p>
+
+<p align="center" style="display: flex; flex-direction: row; justify-content: center; align-items: center">
+🍭 <a href="http://wisdomentor.jludreamworks.com" target="_blank"  style="margin-left: 6px">WisdoMentor在线体验</a> • |
+<a href="" target="_blank" style="margin-left: 10px">💬</a> <a href="./resources/wechat.md" target="_blank"  style="margin-left: 6px">WeChat</a> 
+</p> -->
+
+<p align="center" style="display: flex; flex-direction: row; justify-content: center; align-items: center">
+<a href="https://github.com/datawhalechina/unlock-deepseek/blob/main/README@en.md" target="_blank"  style="margin-left: 6px">English Readme</a>  • |
+<a href="https://github.com/datawhalechina/unlock-deepseek/blob/main/README.md" target="_blank"  style="margin-left: 6px">中文 Readme</a> 
+</p>
+
+面向广泛 AI 研究爱好者群体的 DeepSeek 系列工作解读、扩展和复现，致力于传播 DeepSeek 在 AGI 实践之路上的创新性成果，并提供从 0 代码实现，打造 LLM 前沿技术教学项目。
 
 ### 项目受众
 
@@ -57,16 +75,22 @@
 
 | 姓名   | 职责          | 简介       |
 | :----- | :------------ | :--------- |
-| 骆秀韬 | 项目负责人    | 似然实验室 |
-| 姜舒凡 | 项目负责人    |            |
-| 陈嘉诺 | 负责Infra部分 |            |
-| 林景豪 | GRPO 算法解读 |            |
+| [骆秀韬](https://github.com/anine09) | 项目负责人    | 似然实验室 |
+| [姜舒凡]() | 项目负责人    |            |
+| [陈嘉诺](https://github.com/Tangent-90C) | 负责Infra部分 |  广州大学   |
+| [林景豪](https://github.com/linjh1118) | GRPO 算法解读 |     智谱       |
 
 ## 参与贡献
 
 - 如果你发现了一些问题，可以提Issue进行反馈，如果提完没有人回复你可以联系[保姆团队](https://github.com/datawhalechina/DOPMC/blob/main/OP.md)的同学进行反馈跟进~
 - 如果你想参与贡献本项目，可以提Pull request，如果提完没有人回复你可以联系[保姆团队](https://github.com/datawhalechina/DOPMC/blob/main/OP.md)的同学进行反馈跟进~
 - 如果你对 Datawhale 很感兴趣并想要发起一个新的项目，请按照[Datawhale开源项目指南](https://github.com/datawhalechina/DOPMC/blob/main/GUIDE.md)进行操作即可~
+
+
+## 致谢
+我们衷心感谢以下开源资源和帮助，使我们能够构建这个项目：[DeepSeek](https://github.com/deepseek-ai/DeepSeek-R1), [Open-R1](https://github.com/huggingface/open-r1), [trl](https://github.com/huggingface/trl), [mini-deepseek-r1](https://www.philschmid.de/mini-deepseek-r1)（我们的初始代码库），[TinyZero](https://github.com/Jiayi-Pan/TinyZero)，[flash-attn](https://github.com/Dao-AILab/flash-attention)，[modelscope](https://github.com/modelscope/modelscope)，[vllm](https://github.com/vllm-project/vllm)。
+
+
 
 ## 关注我们
 
