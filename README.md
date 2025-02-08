@@ -79,6 +79,7 @@
 | [姜舒凡]() | 项目负责人    |            |
 | [陈嘉诺](https://github.com/Tangent-90C) | 负责Infra部分 |  广州大学   |
 | [林景豪](https://github.com/linjh1118) | GRPO 算法解读 |     智谱       |
+| [刘洋]() | MCTS 算法解读 |            |
 
 ## 参与贡献
 
