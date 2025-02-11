@@ -8,6 +8,7 @@ from typing import List
 
 from datasets import load_dataset
 from swanlab.integration.transformers import SwanLabCallback
+import torch
 from transformers import AutoTokenizer
 from transformers.trainer_utils import get_last_checkpoint
 from trl import GRPOConfig, GRPOTrainer, ModelConfig, TrlParser
@@ -233,6 +234,20 @@ def grpo_function(
     train_test_split = dataset.train_test_split(test_size=0.1)
     train_dataset = train_test_split["train"]  # 获取训练集
     test_dataset = train_test_split["test"]  # 获取测试集
+
+    # 参考自 huggingface/open-r1, 把attn_implementation（是否使用flash_attention）等参数传入模型初始化参数
+    logger.info("*** Initializing model kwargs ***")
+    torch_dtype = (
+        model_args.torch_dtype if model_args.torch_dtype in ["auto", None] else getattr(torch, model_args.torch_dtype)
+    )
+    model_kwargs = dict(
+        revision=model_args.model_revision,
+        trust_remote_code=model_args.trust_remote_code,
+        attn_implementation=model_args.attn_implementation,
+        torch_dtype=torch_dtype,
+        use_cache=False if training_args.gradient_checkpointing else True,
+    )
+    training_args.model_init_kwargs = model_kwargs
 
     # 设置 GRPOTrainer
     trainer = GRPOTrainer(
