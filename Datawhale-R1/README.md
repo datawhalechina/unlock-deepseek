@@ -21,6 +21,9 @@
 > 4. 我们在文章中推荐大家使用的 [TinyZero](https://github.com/Jiayi-Pan/TinyZero) 项目没有这个错误。
 > 5. 关于 Aha Moment 的判断大家当笑话看看就好，仅为 [骆师傅](https://github.com/anine09) 个人观点，仍需更多严谨研究验证。
 > 6. 忘了开启 `flash-attn`，已在 https://github.com/datawhalechina/unlock-deepseek/pull/25 修复，感谢 [@LinglingGreat](https://github.com/LinglingGreat) 同学的贡献。
+> 7. 我们同时更新一版训练流程示意图。
+> ![image](https://github.com/user-attachments/assets/8f4d576c-55cd-49bf-91a9-f9a86724ef04)
+
 
 # 单机单卡复现
 
