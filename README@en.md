@@ -5,7 +5,7 @@
 <!-- <a href="" target="_blank" style="margin-left: 6px">🤗</a> <a href="https://modelscope.cn/models/linjh1118/WidsoMenter-8B/summary" target="_blank" style="margin-left: 6px">HuggingFace</a>  • | 
 <a href="" target="_blank" style="margin-left: 10px">🤖</a> <a href="https://modelscope.cn/models/linjh1118/WidsoMenter-8B/summary" target="_blank" style="margin-left: 6px">ModelScope</a>  • |
 <a href="" target="_blank" style="margin-left: 10px">📃</a> <a href="./resources/WisdoMentor_tech_report.pdf" target="_blank" style="margin-left: 6px">[Wisdom-8B @ arxiv]</a>
-  
+
 </p>
 
 <p align="center" style="display: flex; flex-direction: row; justify-content: center; align-items: center">
@@ -77,6 +77,7 @@ Due to the lack of extensive documentation, this section can only be approached 
 | [ShuFan Jiang]() | Project Leader    |            |
 | [JiaNuo Chen](https://github.com/Tangent-90C) | Responsible for Infra Part | Guangzhou University |
 | [JingHao Lin](https://github.com/linjh1118) | Interpreting GRPO Algorithm | Zhipu.AI |
+| [Kaijun Deng](https://github.com/kedreamix) | Kimi-K1.5 Paper Explanation | Shenzhen University |
 
 ## Contributing
 

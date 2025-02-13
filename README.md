@@ -5,7 +5,7 @@
 <!-- <a href="" target="_blank" style="margin-left: 6px">🤗</a> <a href="https://modelscope.cn/models/linjh1118/WidsoMenter-8B/summary" target="_blank" style="margin-left: 6px">HuggingFace</a>  • | 
 <a href="" target="_blank" style="margin-left: 10px">🤖</a> <a href="https://modelscope.cn/models/linjh1118/WidsoMenter-8B/summary" target="_blank" style="margin-left: 6px">ModelScope</a>  • |
 <a href="" target="_blank" style="margin-left: 10px">📃</a> <a href="./resources/WisdoMentor_tech_report.pdf" target="_blank" style="margin-left: 6px">[Wisdom-8B @ arxiv]</a>
-  
+
 </p>
 
 <p align="center" style="display: flex; flex-direction: row; justify-content: center; align-items: center">
@@ -79,6 +79,7 @@
 | [姜舒凡]() | 项目负责人    |            |
 | [陈嘉诺](https://github.com/Tangent-90C) | 负责Infra部分 |  广州大学   |
 | [林景豪](https://github.com/linjh1118) | GRPO 算法解读 |     智谱       |
+| [邓恺俊](https://github.com/kedreamix) | Kimi-K1.5论文解读 | 深圳大学 |
 | [刘洋]() | MCTS 算法解读 |            |
 
 ## 参与贡献
