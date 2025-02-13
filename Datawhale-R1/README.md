@@ -31,3 +31,4 @@
 - Datawhale-R1_unsloth.yaml
 - train_Datawhale-R1_unsloth.py
 - train_Datawhale-R1_unsloth.py
+- train_Datawhale-R1_unsloth.sh
