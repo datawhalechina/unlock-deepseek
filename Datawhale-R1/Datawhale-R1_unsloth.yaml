@@ -25,7 +25,7 @@ gradient_accumulation_steps: 4
 gradient_checkpointing: true
 gradient_checkpointing_kwargs:
   use_reentrant: false
-learning_rate: 5.0e-7 # 学习率，调整过，参见下文介绍
+learning_rate: 1.0e-5 # 学习率调整为1e-5
 lr_scheduler_type: cosine # 学习率衰减方案
 warmup_ratio: 0.03 # 学习率预热比率（对于整个步长），好用！
 seed: 2025 # 随机种子，方便实验复现
@@ -37,7 +37,7 @@ max_prompt_length: 256 # 输入 prompt 最大长度，本实验基本不会有�
 max_completion_length: 1024 # 输出回答长度，包含推理思维链
 num_generations: 4
 use_vllm: true # 启用 vllm 来加速推理
-vllm_gpu_memory_utilization: 0.2
+vllm_gpu_memory_utilization: 0.4
 
 # Logging arguments
 logging_strategy: steps

@@ -209,7 +209,8 @@ def grpo_function(
         max_lora_rank=model_args.lora_r,  # 设置 LoRA 的最大秩
         max_seq_length=training_args.max_completion_length,  # 设置最大序列长度
         gpu_memory_utilization=training_args.vllm_gpu_memory_utilization,  # GPU 内存利用率，若内存不足可减少
-    )
+        attn_implementation=model_args.attn_implementation, # 设置注意力实现方式 flash attention
+    ) 
 
     # PEFT 模型
     model = FastLanguageModel.get_peft_model(
