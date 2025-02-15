@@ -12,20 +12,11 @@ from transformers import AutoTokenizer
 from transformers.trainer_utils import get_last_checkpoint
 # 如果在使用过程中出现错误，请确保安装指定的 TRL 版本和 unsloth 库
 # 可以使用以下命令进行安装：
-# pip install git+https://github.com/huggingface/trl.git@e95f9fb74a3c3647b86f251b7e230ec51c64b72b
+# pip install trl==0.15.0
 # pip install unsloth
-try:
-    from unsloth import FastLanguageModel, PatchFastRL
-    PatchFastRL("GRPO", FastLanguageModel)  # 对 TRL 进行补丁处理
-except Exception as e:
-    raise ImportError(
-        "请安装指定的 TRL 版本和 unsloth 库: "
-        "pip install git+https://github.com/huggingface/trl.git@e95f9fb74a3c3647b86f251b7e230ec51c64b72b\n"
-        "pip install unsloth"
-    )
 
-
-from unsloth import is_bfloat16_supported
+from unsloth import FastLanguageModel, PatchFastRL
+PatchFastRL("GRPO", FastLanguageModel)  # 对 TRL 进行补丁处理
 
 from trl import GRPOConfig, GRPOTrainer, ModelConfig, TrlParser
 
