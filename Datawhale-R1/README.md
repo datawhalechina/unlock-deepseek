@@ -10,7 +10,7 @@
 - train_Datawhale-R1.sh
 
 对应文章：[DeepSeek R1 Zero中文复现教程来了！
-](https://mp.weixin.qq.com/s?__biz=MzIyNjM2MzQyNg==&mid=2247700308&idx=1&sn=aa6324d30cc6d054c1dbb238b013b9b5&chksm=e98d1841220df3bd906ebe92682d4ff32dfa2fbd382fc714c8c457631de484068775c1c26846&mpshare=1&scene=2&srcid=0206JNv8uw29ECf9inhhzaxg&sharer_shareinfo=a3c5178266c37875a63b36d4a96bde91&sharer_shareinfo_first=5cd0c564850ed06c98ad41d8c06b256f#rd)
+](https://mp.weixin.qq.com/s/Z7P61IV3n4XYeC0Et_fvwg)
 
 > [!CAUTION]
 > 更正说明
@@ -31,3 +31,5 @@
 - Datawhale-R1_unsloth.yaml
 - train_Datawhale-R1_unsloth.py
 - train_Datawhale-R1_unsloth.sh
+
+对应文章：[单卡复现 DeepSeek R1 Zero教程来了！](https://mp.weixin.qq.com/s/0Q369GFqA_VguWeiL0MwDg)
