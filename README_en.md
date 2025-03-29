@@ -15,7 +15,7 @@
 
 <p align="center" style="display: flex; flex-direction: row; justify-content: center; align-items: center">
 <a href="https://github.com/datawhalechina/unlock-deepseek/blob/main/README.md" target="_blank"  style="margin-left: 6px">English Readme</a>  • |
-<a href="https://github.com/datawhalechina/unlock-deepseek/blob/main/README@en.md" target="_blank"  style="margin-left: 6px">Chinese Readme</a> 
+<a href="https://github.com/datawhalechina/unlock-deepseek/blob/main/README_en.md" target="_blank"  style="margin-left: 6px">Chinese Readme</a> 
 </p>
 
 Unlock-DeepSeek is a series of works dedicated to interpreting, expanding, and reproducing DeepSeek's innovative achievements on the path to AGI for a wide audience of AI enthusiasts. It aims at disseminating these innovations and providing hands-on projects from scratch to master the cutting-edge technologies in large language models.

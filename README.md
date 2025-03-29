@@ -14,7 +14,7 @@
 </p> -->
 
 <p align="center" style="display: flex; flex-direction: row; justify-content: center; align-items: center">
-<a href="https://github.com/datawhalechina/unlock-deepseek/blob/main/README@en.md" target="_blank"  style="margin-left: 6px">English Readme</a>  • |
+<a href="https://github.com/datawhalechina/unlock-deepseek/blob/main/README_en.md" target="_blank"  style="margin-left: 6px">English Readme</a>  • |
 <a href="https://github.com/datawhalechina/unlock-deepseek/blob/main/README.md" target="_blank"  style="margin-left: 6px">中文 Readme</a> 
 </p>
 
