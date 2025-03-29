@@ -1,0 +1,1409 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="DeepSeek 系列工作解读、扩展和复现。">
+      
+      
+        <meta name="author" content="Unlock-DeepSeek Team">
+      
+      
+        <link rel="canonical" href="https://datawhalechina.github.io/unlock-deepseek/MoE/1-1%20MoE%E7%AE%80%E4%BB%8B/">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
+    
+    
+      
+        <title>1-1 MoE简介 - Unlock-DeepSeek</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.4af4bdda.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="red">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-1-moe" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="Unlock-DeepSeek" class="md-header__button md-logo" aria-label="Unlock-DeepSeek" data-md-component="logo">
+      
+  <img src="../../images/small_datawhale_logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Unlock-DeepSeek
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1-1 MoE简介
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="red"  aria-label="切换至夜间模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换至夜间模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="yellow"  aria-label="切换至日间模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换至日间模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/datawhalechina/unlock-deepseek" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    datawhalechina/unlock-deepseek
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  项目介绍
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../MoE历史脉络回顾.md" class="md-tabs__link">
+          
+  
+  MoE
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Reasoning_Models/蒙特卡洛树搜索MCTS.md" class="md-tabs__link">
+          
+  
+  Reasoning Models
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Keys/DeepSeek成本为什么这么低/README.md" class="md-tabs__link">
+          
+  
+  Keys
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://datawhale.cn/" class="md-tabs__link">
+        
+  
+    
+  
+  关于 Datawhale
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Unlock-DeepSeek" class="md-nav__button md-logo" aria-label="Unlock-DeepSeek" data-md-component="logo">
+      
+  <img src="../../images/small_datawhale_logo.png" alt="logo">
+
+    </a>
+    Unlock-DeepSeek
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/datawhalechina/unlock-deepseek" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    datawhalechina/unlock-deepseek
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    项目介绍
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    MoE
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            MoE
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MoE历史脉络回顾.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MoE历史脉络回顾
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Reasoning Models
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Reasoning Models
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Reasoning_Models/蒙特卡洛树搜索MCTS.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    蒙特卡洛树搜索MCTS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Keys
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Keys
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Keys/DeepSeek成本为什么这么低/README.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DeepSeek成本为什么这么低
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://datawhale.cn/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    关于 Datawhale
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 引言
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-moe" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. MoE的发展历史
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. MoE的发展历史">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-moe" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 MoE的起源和早期研究
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-moe" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 MoE在自然语言处理领域的应用案例
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-moe" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3 MoE的优势
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-moe" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. MoE架构的核心算法原理
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. MoE架构的核心算法原理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 专家网络的构成
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 门控机制的工作方式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-token" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 Token的路由选择
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-moe" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. MoE架构中常用的数学公式
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. MoE架构中常用的数学公式">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 门控网络的计算公式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 损失函数
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 其他关键公式及其在模型训练和推理过程中的作用
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-moe" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. MoE架构的变体
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. MoE架构的变体">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-moe" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 稀疏门控MoE
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-top-k" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 Top-K路由
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3 专家选择路由
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4 其他变体及其特点和适用场景
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-moe" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. MoE架构在实际应用中可能遇到的问题及解决方案
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. MoE架构在实际应用中可能遇到的问题及解决方案">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1 负载均衡
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2 通信开销
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.3 训练稳定性
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.4 推理效率
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-moe" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. MoE架构在大语言模型中的最新研究
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. MoE架构在大语言模型中的最新研究">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1 最近几年的重要研究论文概述
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2 模型规模、训练方法和性能表现
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.3 面临的挑战和最新的解决方案
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-moe" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. MoE架构的未来发展趋势
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. MoE架构的未来发展趋势">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.1 与其他先进技术的结合
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.2 新的路由算法的探索
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.3 在多模态模型和强化学习等领域的应用潜力
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. 总结
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 总结">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1moe" class="md-nav__link">
+    <span class="md-ellipsis">
+      表1：主要MoE架构的比较
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2moe" class="md-nav__link">
+    <span class="md-ellipsis">
+      表2：MoE模型与稠密模型的性能比较
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="1-1-moe">1-1 MoE简介<a class="headerlink" href="#1-1-moe" title="Permanent link">&para;</a></h1>
+<h3 id="1">1. 引言<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
+<p>大语言模型（LLMs）近年来取得了显著的进步，在自然语言处理领域展现出卓越的能力，并在各种任务中都表现出强大的性能。随着模型规模的持续扩大，其在理解和生成复杂文本方面的能力也随之增强。然而，这种规模的增长也带来了巨大的计算和内存需求，给LLMs的训练和部署带来了严峻的挑战。为了应对这些挑战，研究人员不断探索新的模型架构和训练方法。混合专家模型（Mixture of Experts, 即MoE）作为一种有效的技术应运而生，它旨在扩展模型容量的同时，在一定程度上控制计算成本。</p>
+<p>混合专家模型的核心思想在于将一个庞大的模型分解为多个更小的、专门化的子网络，这些子网络被称为"专家"。通过一个"门控网络"机制，MoE模型能够根据输入数据的特性，动态地选择激活最相关的专家来处理特定的输入或任务。这种方法借鉴了"分而治之"的思想，使得模型能够更好地处理复杂和异构的数据，每个专家都可以专注于学习输入空间的不同区域或不同的特征表示，从而提升整体模型的性能。MoE架构的出现，为构建更大规模、更高效的语言模型提供了一条富有潜力的路径。</p>
+<p><a class="glightbox" href="../../images/1-1-02.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../../images/1-1-02.png" /></a></p>
+<h3 id="2-moe">2. MoE的发展历史<a class="headerlink" href="#2-moe" title="Permanent link">&para;</a></h3>
+<h4 id="21-moe">2.1 MoE的起源和早期研究<a class="headerlink" href="#21-moe" title="Permanent link">&para;</a></h4>
+<p><a class="glightbox" href="../../images/1-1-01.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../../images/1-1-01.png" /></a></p>
+<p>MoE模型的概念最早可以追溯到1991年的论文“Adaptive Mixture of Local Experts”，由Michael Jordan和Geoffrey Hinton等人提出。这篇开创性的论文为MoE模型奠定了基础，提出了一个系统，在该系统中，单独的网络（专家）在门控网络的指导下处理训练案例的不同子集。这种将多个专家模型组合在一起以提高预测性能的思想，启发了后续众多研究工作的发展。</p>
+<p>在随后的几年里，MoE模型的研究逐渐展开，但主要集中在相对较小规模的模型和特定的应用场景中。直到近年来，随着深度学习技术的快速发展和大规模数据集的出现，MoE模型开始在自然语言处理、计算机视觉等领域得到更广泛的应用和关注。</p>
+<p>2010年至2015年期间，MoE模型的发展取得了重大进展。一方面，研究人员开始探索将MoE作为更深层次网络中的组件，将其嵌入到多层神经网络的某个层级中，以实现模型的大规模化和高效率并存。例如，Eigen、Ranzato和Ilya等人在他们的研究中，将MoE模型与深层神经网络相结合，通过在不同的网络层级中设置专家模型，使得模型能够更好地处理复杂的输入数据和任务，同时保持较高的计算效率。</p>
+<p>另一方面，Yoshua Bengio等研究人员引入了条件计算的概念，这种计算方式可以根据输入数据动态激活网络的某些组件，而关闭其他不相关的组件。这种动态的计算机制为MoE模型的发展提供了新的思路，使得模型能够根据输入数据的特点，灵活地选择和激活最合适的专家进行处理，进一步提高了模型的适应性和效率。</p>
+<p>2017年，谷歌的研究团队在论文“Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer”中，将MoE模型与LSTM（长短期记忆网络）相结合，应用于自然语言处理任务，特别是在机器翻译领域取得了显著的性能提升。这项工作不仅展示了MoE模型在处理大规模数据和复杂任务方面的潜力，还提出了稀疏门控机制，即在每次前向传播过程中，只激活一小部分专家来进行计算，而不是激活所有的专家。这种稀疏性的引入，使得MoE模型能够在保持较高性能的同时，显著降低计算成本，为后续MoE模型在更大规模的应用中奠定了基础。</p>
+<p>此后，MoE模型的研究不断深入和拓展。2020年，谷歌的GShard项目首次将MoE技术引入Transformer架构中，并提供了高效的分布式并行计算架构，使得MoE模型能够在分布式环境中进行大规模的训练和推理，进一步推动了MoE模型在自然语言处理领域的应用。2021年，谷歌的Switch Transformer和GLaM模型进一步挖掘了MoE技术在自然语言处理中的应用潜力，通过优化门控机制和专家设计，实现了更优秀的性能表现。</p>
+<p>近年来，MoE模型的应用范围不断扩大，除了在自然语言处理领域继续取得突破外，还在计算机视觉、多模态学习等领域得到了广泛的研究和应用。例如，2021年6月，V-MoE将MoE架构应用在计算机视觉领域的Transformer架构模型中，通过改进路由算法，在相关任务中实现了更高的训练效率和更好的性能表现。2022年，LIMoE作为首个应用了稀疏混合专家模型技术的多模态模型，其模型性能相较于CLIP等其他多模态模型也有所提升，展示了MoE模型在处理多模态数据方面的强大能力。</p>
+<p>总之，MoE模型从最初的理论提出，到如今在多个领域的广泛应用和发展，经历了三十多年的不断探索和创新。随着深度学习技术的不断进步和计算资源的日益丰富，MoE模型将继续发挥其独特的优势，在解决大规模、复杂的人工智能问题中扮演着越来越重要的角色。</p>
+<h4 id="22-moe">2.2 MoE在自然语言处理领域的应用案例<a class="headerlink" href="#22-moe" title="Permanent link">&para;</a></h4>
+<p>在深度学习时代之前，混合专家模型主要被视为一种集成学习的技术。然而，随着深度学习的兴起，MoE在构建极大规模模型方面找到了新的应用，成为执行条件计算的一种有效手段。与经典的MoE不同，在深度学习中，MoE模型对于每个查询通常只涉及少数几个专家的输出，而不是所有专家的加权总和。这种转变的关键目标是降低计算成本。</p>
+<p>最早将MoE应用于深度学习的论文可以追溯到2013年，该论文提出在深度神经网络的每一层使用不同的门控网络。具体来说，每个门控网络都是一个线性-ReLU-线性-Softmax网络，而每个专家网络都是一个线性-ReLU网络。然而，由于从门控网络输出的不是稀疏的，因此需要所有专家的输出，并没有实现条件计算。因此，在深度学习中使用MoE的主要目标是减少计算成本，这意味着对于每个查询，应该只查询一小部分专家。</p>
+<p>自然语言处理领域中MoE的一个重要应用案例是2017年由Google Brain的研究人员提出的Sparsely-Gated Mixture-of-Experts Layer。该层使用前馈网络作为专家，并采用线性-Softmax门控机制。与之前提出的硬MoE类似，它通过仅对Top-K个专家的输出进行加权求和来实现稀疏性。这种稀疏门控MoE层被成功应用于机器翻译等任务，使得模型能够扩展到1370亿参数的规模，同时在推理时保持较低的计算成本，因为每个输入只激活最相关的专家。</p>
+<h4 id="23-moe">2.3 MoE的优势<a class="headerlink" href="#23-moe" title="Permanent link">&para;</a></h4>
+<p>混合专家模型架构使得构建包含数十亿甚至数万亿参数的大规模模型成为可能，同时能够显著降低预训练期间的计算成本，并在推理时实现更快的性能。这种效率的实现主要归功于MoE能够选择性地激活给定任务所需的特定专家，而不是为每个任务都激活整个神经网络。近年来，随着用于生成式AI的领先深度学习模型变得越来越大且计算需求越来越高，混合专家模型提供了一种解决更大模型容量和更小模型效率之间权衡的方法。这在自然语言处理（NLP）领域得到了最显著的探索：在大语言模型中，如Mistral的Mixtral 8x7B和DeepSeek，DeepSeek V2，DeepSeek V3，（以及根据一些猜测OpenAI的GPT-4）都采用了MoE架构。</p>
+<p>MoE架构在大语言模型中引入带来了多方面的优势：</p>
+<ul>
+<li>
+<p>性能：通过选择性地激活与给定任务最相关的专家，MoE模型避免了不必要的计算，从而提高了速度并降低了资源消耗。</p>
+</li>
+<li>
+<p>灵活性：专家的多样化能力使得MoE模型具有高度的灵活性。通过调用具有专门能力的专家，MoE模型可以在更广泛的任务范围内取得成功。</p>
+</li>
+<li>
+<p>容错性：MoE的"分而治之"方法，其中任务是分开执行的，增强了模型对故障的弹性。如果一个专家遇到问题，不一定会影响整个模型的功能。</p>
+</li>
+<li>
+<p>可扩展性：将复杂问题分解为更小、更易于管理的任务有助于MoE模型处理日益复杂的输入。</p>
+</li>
+<li>
+<p>模型容量：相对于相同计算成本的稠密模型，MoE模型可以显著增加模型参数量，从而提高模型容量。</p>
+</li>
+<li>
+<p>训练成本降低：在固定的时间或计算成本约束下，MoE模型可以处理更多tokens，从而更有效地训练更大的模型。</p>
+</li>
+<li>
+<p>延迟降低：在处理长提示和大型batches时，MoE架构可以降低首次token的serving延迟。</p>
+</li>
+<li>
+<p>领域专家分配：专家可以学习处理不同的领域或任务，使得模型能够更好地理解和生成特定领域的文本。</p>
+</li>
+<li>
+<p>更好的泛化能力：通过组合多个专家的预测，MoE模型可以提高泛化性能并减少过拟合。</p>
+</li>
+</ul>
+<h3 id="3-moe">3. MoE架构的核心算法原理<a class="headerlink" href="#3-moe" title="Permanent link">&para;</a></h3>
+<h4 id="31">3.1 专家网络的构成<a class="headerlink" href="#31" title="Permanent link">&para;</a></h4>
+<p>在混合专家模型（MoE）中，专家网络是构成模型基本构建块的子网络。每个专家都设计成专注于处理输入数据的一个特定子集或执行特定的任务。专家网络本身可以是任何类型的神经网络架构，这包括但不限于传统的前馈网络（Feed-Forward Networks, FFNs）、卷积神经网络（Convolutional Neural Networks, CNNs）以及在自然语言处理领域广泛应用的Transformer模块。</p>
+<p>在大语言模型（LLMs）的背景下，专家网络通常实现为Transformer模块内部的前馈网络（FFN）层。</p>
+<p><a class="glightbox" href="../../images/1-1-04.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../../images/1-1-04.png" /></a></p>
+<p>例如，在Mistral AI发布的Mixtral 8x7B模型中，每一层都包含8个专家，每个专家都是一个拥有70亿参数的前馈块。这些专家网络通过在特定的数据子集上进行训练，从而能够专注于学习特定的任务或输入模式。例如，在一个语言处理任务中，一个专家可能专注于处理语法结构，而另一个专家则可能擅长理解语义信息。这种专门化的训练使得每个专家都能在其特定的领域内表现出色。</p>
+<p><a class="glightbox" href="../../images/1-1-05.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../../images/1-1-05.png" /></a></p>
+<p>专家网络架构的灵活性是MoE模型的一个关键优势。通过选择适合特定类型数据或任务的专家网络，MoE模型能够展现出极高的通用性。在LLMs中，将Transformer架构中的FFN层复制并作为专家是一种常见的做法，这表明了前馈组件在捕获专门知识方面的重要性。通过复制这些计算密集型且对模型容量至关重要的层，并使它们专门化，MoE模型能够有效地扩展其能力，而无需成比例地增加计算成本。</p>
+<h4 id="32">3.2 门控机制的工作方式<a class="headerlink" href="#32" title="Permanent link">&para;</a></h4>
+<p>门控网络（也称为路由网络）在混合专家模型（MoE）中扮演着至关重要的角色。它的主要职责是根据输入的特性，决定将哪些输入tokens发送给哪些专家网络进行处理。门控网络通常是一个相对轻量级的神经网络，它接收与专家网络相同的输入。</p>
+<p>门控网络的输出是一个概率分布或权重向量，这个向量指示了每个专家应该在多大程度上处理当前的输入。一种常用的门控函数是Softmax函数，它可以将门控网络的原始输出转换为一个归一化的概率分布，表示每个专家被选择的概率。</p>
+<p>门控网络的训练与专家网络是同步进行的，其目标是学习如何将输入有效地路由到最适合处理该输入的专家。门控机制是MoE模型实现条件计算的关键，它允许模型根据输入数据的特性选择性地激活其容量，从而避免了对每个输入都激活整个模型的计算开销。门控网络和专家网络的联合训练确保了门控能够有效地将输入导向那些能够最好地处理它们的专门化专家。</p>
+<p><a class="glightbox" href="../../images/1-1-06.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../../images/1-1-06.png" /></a></p>
+<h4 id="33-token">3.3 Token的路由选择<a class="headerlink" href="#33-token" title="Permanent link">&para;</a></h4>
+<p>在混合专家模型（MoE）中，token的路由选择是指将输入序列中的每个token分配给一个或多个专家网络进行处理的过程。研究人员已经提出了多种token路由策略，每种策略都有其独特的特点和适用场景：</p>
+<p>Top-K路由：这是最直接的方法之一。门控网络为每个专家计算一个亲和力得分，然后选择得分最高的前K个专家，并将当前的输入数据发送给这些选定的专家进行处理。例如，Mistral AI的Mixtral 8x7B模型就采用了Top-2路由策略，意味着对于每个token，门控网络会选择两个最合适的专家进行处理。而Google的Switch Transformer则使用了更为极端的Top-1路由，每个token只被发送给一个最匹配的专家。</p>
+<p>专家选择路由：在这种方法中，路由的方向与Top-K路由相反。不是由数据（token）选择专家，而是由专家主动选择它们认为最适合处理的数据（token）。每个专家通常具有一定的处理容量，并会选择它认为最相关的Top-K个tokens进行处理。这种策略的主要目标是实现更好的负载均衡，并允许每个token被不同数量的专家处理。</p>
+<p>稀疏路由：这种方法的核心思想是对于每个输入数据点（通常是token），只激活网络中的一小部分专家。这种方法旨在创建一个稀疏的网络，从而减少计算资源的使用，与稠密路由（所有专家都为每个数据点激活）相比，稀疏路由在计算效率方面具有显著优势。</p>
+<p>随机路由：在某些Top-K路由的变体中，例如在Top-2的设置中，虽然总是会选择得分最高的专家，但第二个专家可能会以与其权重成比例的概率被随机选择。这种方法可以在一定程度上增加路由的随机性，有助于探索不同的专家组合，并可能改善模型的泛化能力。</p>
+<p>选择哪种路由策略对于MoE模型的性能、效率以及专家之间的负载均衡具有重要的影响。从简单的Top-K路由到更复杂的专家选择路由的演变，反映了研究人员在不断探索和优化路由过程，以期获得更好的模型性能和更高的计算效率。</p>
+<h3 id="4-moe">4. MoE架构中常用的数学公式<a class="headerlink" href="#4-moe" title="Permanent link">&para;</a></h3>
+<h4 id="41">4.1 门控网络的计算公式<a class="headerlink" href="#41" title="Permanent link">&para;</a></h4>
+<p>门控网络在混合专家模型（MoE）中负责为每个专家生成一个权重，以决定其对当前输入的贡献程度。一种常见的实现方式是使用Softmax函数来产生专家权重的概率分布。给定输入 <span class="arithmatex">\(x\)</span> 和门控网络的权重矩阵 <span class="arithmatex">\(W_g\)</span>，专家权重的概率向量 <span class="arithmatex">\(G(x)\)</span> 可以表示为：</p>
+<div class="arithmatex">\[G(x)=\text{Softmax}(x \cdot W_g)\]</div>
+<p>其中，<span class="arithmatex">\(x \cdot W_g\)</span> 表示输入与权重矩阵的乘积，Softmax函数将结果转换为概率分布。</p>
+<p>在Sparsely-Gated MoE中，为了实现稀疏性，通常使用Noisy Top-K Gating。这个过程首先计算一个带有噪声的激活值 <span class="arithmatex">\(H(x)_i\)</span>：</p>
+<div class="arithmatex">\[H(x)_i = (x \cdot W_g)_i + \text{StandardNormal()} \cdot \text{Softplus}((x \cdot W_{noise})_i)\]</div>
+<p>然后，使用一个<span class="arithmatex">\(KeepTopK\)</span>函数来保留向量 <span class="arithmatex">\(H(x)\)</span> 中最大的前 <span class="arithmatex">\(k\)</span> 个元素，并将其他元素设置为 <span class="arithmatex">\(-\infty\)</span>：</p>
+<div class="arithmatex">\[\text{KeepTopK}(v, k)_i = \begin{cases}
+v_i &amp; \text{if } v_i \text{ is in the top } k \text{ elements of } v, \\
+-\infty &amp; \text{otherwise}.
+\end{cases}\]</div>
+<p>最后，对结果应用<span class="arithmatex">\(Softmax\)</span>函数得到门控网络的输出 <span class="arithmatex">\(G(x)\)</span>：</p>
+<div class="arithmatex">\[G(x) = \text{Softmax}(\text{KeepTopK}(H(x), k))\]</div>
+<p>对于Top-K路由，首先计算选择每个专家的概率 <span class="arithmatex">\(P\)</span>：</p>
+<div class="arithmatex">\[P = \text{Softmax}(W_r \cdot x^T)\]</div>
+<p>其中，<span class="arithmatex">\(W_r\)</span> 是可学习的参数。然后，根据概率 <span class="arithmatex">\(P\)</span> 选择前<span class="arithmatex">\(K\)</span>个专家，并对这些选定专家的概率进行归一化，得到权重 <span class="arithmatex">\(g_i(x)\)</span>：</p>
+<div class="arithmatex">\[g_i(x) = \begin{cases}
+\frac{P_i}{\sum_{j \in \text{TopK}(P)} P_j} &amp; \text{if } i \in \text{TopK}(P), \\
+0 &amp; \text{if } i \notin \text{TopK}(P).
+\end{cases}\]</div>
+<p><span class="arithmatex">\(Softmax\)</span>函数在门控机制中的应用使得模型能够以概率的方式选择专家，这允许不同的专家根据其相关性对输入做出不同程度的贡献。而Noisy Top-K Gating中噪声的引入有助于在训练过程中进行探索，并可能通过防止门控网络过早地变得过于确定性来改善负载均衡。</p>
+<h4 id="42">4.2 损失函数<a class="headerlink" href="#42" title="Permanent link">&para;</a></h4>
+<p>混合专家模型（MoE）的训练通常涉及最小化一个损失函数，该损失函数旨在优化专家网络的性能以及门控网络路由输入的有效性。早期的MoE模型有时会使用均方误差（Mean Squared Error, MSE）损失函数。如果 <span class="arithmatex">\(d\)</span> 是期望输出，<span class="arithmatex">\(o_i\)</span> 是专家 <span class="arithmatex">\(i\)</span> 的输出，<span class="arithmatex">\(p_i\)</span> 是门控网络分配给专家 <span class="arithmatex">\(i\)</span> 的概率，则MSE损失可以表示为：</p>
+<div class="arithmatex">\[E = \|d - \sum_i p_i o_i\|^2\]</div>
+<p>在《Adaptive Mixture of Local Experts》这篇论文中，提出了基于负对数似然的损失函数。如果 <span class="arithmatex">\(g_J(x)\)</span> 是门控函数对于专家 <span class="arithmatex">\(J\)</span> 的输出，<span class="arithmatex">\(p_J(y;x)\)</span> 是专家 <span class="arithmatex">\(J\)</span> 对于输入 <span class="arithmatex">\(x\)</span> 预测输出 <span class="arithmatex">\(y\)</span> 的概率密度函数，则混合专家的总概率密度函数为：</p>
+<div class="arithmatex">\[p(y;x) = \sum_J g_J(x) p_J(y;x)\]</div>
+<p>训练的目标是最大化训练数据的对数似然函数。</p>
+<p>为了解决MoE模型中常见的负载均衡问题，通常会在总损失函数中添加辅助损失函数。例如，Switch Transformer使用了一个辅助损失函数来鼓励专家之间的均匀负载。如果 <span class="arithmatex">\(s_{ij}\)</span> 是token <span class="arithmatex">\(i\)</span> 被路由到专家 <span class="arithmatex">\(j\)</span> 的分数，<span class="arithmatex">\(N\)</span> 是batch中的token数量，<span class="arithmatex">\(E\)</span> 是专家的数量，则辅助损失可以表示为：</p>
+<div class="arithmatex">\[L_{aux} = \frac{1}{N} \sum_{i=1}^N \left( \sum_{j=1}^E s_{ij} \right)^2\]</div>
+<p>损失函数的设计不仅旨在优化每个专家的性能，还要确保门控网络能够有效地路由输入。专门为负载均衡设计的辅助损失项强调了在MoE模型中确保所有专家在训练期间得到有效利用的实际挑战。</p>
+<h4 id="43">4.3 其他关键公式及其在模型训练和推理过程中的作用<a class="headerlink" href="#43" title="Permanent link">&para;</a></h4>
+<p>在混合专家模型（MoE）中，专家网络的输出通常基于门控网络的权重进行加权求和，以得到最终的MoE模型的输出。如果 <span class="arithmatex">\(y\)</span> 是MoE的最终输出，<span class="arithmatex">\(G(x)_i\)</span> 是门控网络为专家 <span class="arithmatex">\(i\)</span> 分配的权重，<span class="arithmatex">\(E_i(x)\)</span> 是专家 <span class="arithmatex">\(i\)</span> 对于输入 <span class="arithmatex">\(x\)</span> 的输出，那么MoE的输出可以表示为：</p>
+<div class="arithmatex">\[y = \sum_{i=1}^n G(x)_i E_i(x)\]</div>
+<p>其中，<span class="arithmatex">\(n\)</span> 是专家的总数。这种加权求和的方式使得模型能够利用多个专家的专门知识来处理给定的输入，从而产生更丰富和更细致的响应。</p>
+<p>另一个关键概念是专家容量（Capacity Factor），它用于限制每个专家可以处理的tokens数量，这有助于实现负载均衡。专家容量通常被定义为每个专家可以处理的平均tokens数量乘以一个容量因子。这个容量因子是一个超参数，用于控制每个专家可以接收的最大负载，防止某些专家过载而其他专家利用不足。专家容量的概念是管理计算资源和防止单个专家过载的实用方法，尤其是在训练期间。</p>
+<h3 id="5-moe">5. MoE架构的变体<a class="headerlink" href="#5-moe" title="Permanent link">&para;</a></h3>
+<h4 id="51-moe">5.1 稀疏门控MoE<a class="headerlink" href="#51-moe" title="Permanent link">&para;</a></h4>
+<p>稀疏门控混合专家模型（Sparsely-gated Mixture of Experts, MoE）的核心思想是门控网络对于每个输入的token，只选择激活一小部分最相关的专家进行处理。这种稀疏性通常通过Top-K路由等方法实现，即门控网络为每个专家计算一个得分，然后只计算得分最高的前K个最相关的专家的输出。这种方法显著降低了计算成本，使得训练和推理过程更加高效。Sparsely-Gated MoE Layer是Google Brain提出的一个具体的稀疏门控MoE的实现。稀疏门控是现代MoE架构的基石，它使得模型能够扩展到前所未有的规模，同时保持计算成本在可控范围内。</p>
+<h4 id="52-top-k">5.2 Top-K路由<a class="headerlink" href="#52-top-k" title="Permanent link">&para;</a></h4>
+<p>Top-K路由是一种常用的token路由策略，其中门控网络首先为每个专家计算一个相关性得分，然后选择得分最高的前K个专家来处理当前的输入token。这里的K是一个预先设定的超参数，它决定了每个输入token将被发送给多少个专家进行处理。虽然Top-K路由实现起来相对简单，但它也可能导致负载不均衡的问题，即某些专家可能会因为频繁被选中而过载，而其他专家则可能利用不足。</p>
+<h4 id="53">5.3 专家选择路由<a class="headerlink" href="#53" title="Permanent link">&para;</a></h4>
+<p>与Top-K路由策略不同，专家选择路由（Expert Choice Routing）是一种让专家主动选择它们最适合处理的输入tokens的路由方法。在这种策略中，每个专家通常都具有一定的处理容量，并且会选择它认为最相关的Top-K个tokens进行处理。专家选择路由的主要优点在于它能够更好地实现负载均衡，并且允许每个token被不同数量的专家处理，这取决于专家的选择。</p>
+<h4 id="54">5.4 其他变体及其特点和适用场景<a class="headerlink" href="#54" title="Permanent link">&para;</a></h4>
+<p>除了上述主要的MoE架构变体之外，还有一些其他的变体，它们各自具有独特的特点和适用场景：</p>
+<p>Switch Transformer：这是一种简化的MoE架构，其核心特点是每个输入token只被路由到一个专家，即K=1的Top-K路由。这种方法降低了路由计算和通信成本，但在负载均衡方面可能需要更精细的处理。</p>
+<p>DeepSeek MoE：这种架构采用了细粒度的专家分割技术，将每个专家进一步划分为更小的专家，从而促进更精细的专业化。此外，DeepSeek MoE还使用了共享专家隔离的策略，某些专家被指定为"共享专家"并始终处于激活状态，用于捕获跨不同上下文的通用知识。</p>
+<p>Mixture of Tokens (MoT)：与传统的MoE将tokens路由到专家不同，MoT首先将来自不同输入示例的tokens混合在一起，然后再将它们馈送到专家。这种方法被认为可以提高训练的稳定性以及专家资源的利用率。</p>
+<p>Hierarchical MoE：这种架构使用多层门控网络，形成一个树状的结构。这种分层结构允许进行更复杂的路由决策，并能够学习到多层次的特征表示。</p>
+<p>这些不同的MoE架构变体展示了该领域持续的创新，不同的设计旨在针对特定的优化目标，例如计算成本、负载均衡和专家专业化程度。</p>
+<h3 id="6-moe">6. MoE架构在实际应用中可能遇到的问题及解决方案<a class="headerlink" href="#6-moe" title="Permanent link">&para;</a></h3>
+<h4 id="61">6.1 负载均衡<a class="headerlink" href="#61" title="Permanent link">&para;</a></h4>
+<p>负载不均衡是混合专家模型（MoE）在实际应用中经常遇到的一个挑战。这种问题指的是某些专家网络可能被过度使用，处理了绝大多数的输入tokens，而其他专家则很少或根本没有被激活。这种不平衡会导致被过度使用的专家可能无法充分学习到输入空间的各个方面，而利用不足的专家则无法得到充分的训练，最终影响模型的整体性能。</p>
+<p>为了解决负载均衡的问题，目前存在多种策略：</p>
+<p>在评分过程中添加随机噪声 (Noisy Top-K Gating)：这种方法通过在门控网络为每个专家计算的得分上添加少量随机噪声，来增加专家选择的多样性，从而帮助更均匀地分配负载。</p>
+<p>添加辅助负载均衡损失到总损失函数中：这种策略在训练过程中引入一个额外的损失项，其目的是鼓励门控网络将输入更均匀地路由到所有专家，从而最小化路由到每个专家的输入比例的差异。</p>
+<p>专家选择路由 (Expert Choice Routing)：如前所述，这种路由策略允许专家主动选择它们最适合处理的tokens，从而可以更直接地控制每个专家的负载，实现更好的均衡。</p>
+<p>为每个专家引入额外的"专家偏差"：这种方法在门控网络的输出中为每个专家添加一个可学习的偏差项。如果某个专家长时间没有被使用，其偏差会增加，从而提高它在未来被选择的可能性，反之亦然。</p>
+<p>Loss-Free Balancing策略：最近的研究提出了一种无需辅助损失的负载均衡策略。该策略通过在做出Top-K路由决策之前，首先对每个专家的路由得分应用一个专家特定的偏差。这个偏差会根据专家最近的负载情况进行动态更新，从而持续地维持专家负载的均衡分布。</p>
+<p>负载均衡是确保MoE模型中所有专家都得到有效训练和利用的关键挑战。通过采用上述策略，可以提高模型的性能和效率。</p>
+<h4 id="62">6.2 通信开销<a class="headerlink" href="#62" title="Permanent link">&para;</a></h4>
+<p>在分布式训练和推理的场景下，混合专家模型（MoE）可能会引入显著的通信开销。这是因为当模型的不同部分（包括门控网络和各个专家网络）分布在不同的计算设备（如GPU）上时，需要频繁地在这些设备之间交换激活值和梯度信息。例如，当输入tokens被路由到不同的专家时，如果这些专家位于不同的GPU上，就需要进行跨GPU的通信。同样，在反向传播过程中，来自不同专家的梯度也需要聚合以更新模型的参数。</p>
+<p>为了缓解这种通信开销，研究人员和工程师们提出了多种有效的通信策略和硬件感知的模型设计方法：</p>
+<p>优化模型部署和通信调度：Aurora是一种旨在通过优化模型在不同计算设备上的部署以及设备之间的通信调度来最小化MoE模型推理时间的方法。它通过将来自不同模型的专家共同部署在同一设备上，从而避免了同步的全对全通信的限制，提高了GPU的利用率。</p>
+<p>引入零计算专家：MoE++架构通过在模型中引入"零计算专家"来降低计算开销，并消除FFN专家跨不同GPU的通信开销。这些零计算专家具有可忽略的参数量，可以部署在每个GPU上，从而避免了FFN专家分布在不同GPU上时产生的通信开销和负载不均衡问题。</p>
+<p>利用Megatron-Core的优化策略：Megatron-Core是一个用于训练大型Transformer模型的框架，它提供了一些减少MoE模型通信开销的策略。这些策略包括：尽可能减小模型并行度，因为模型并行会带来通信开销并可能损害性能；确保专家并行（EP）和张量并行（TP）的通信发生在NVLink域内，因为EP和TP都是通信密集型的；以及在可能的情况下，对于专家层优先使用EP而不是TP，因为EP通常比TP具有更好的GEMM效率和更低的通信开销。</p>
+<p>通信与计算重叠：启用通信与计算的重叠是减少通信开销的有效方法。例如，Megatron-Core允许在分布式优化器中启用参数收集和梯度减少的重叠，以及在TP大于1时启用TP通信的重叠。</p>
+<p>通信开销是在扩展MoE模型到多个设备时需要认真考虑的关键因素。通过采用上述策略，可以在一定程度上降低这种开销，提高模型的训练和推理效率。</p>
+<h4 id="63">6.3 训练稳定性<a class="headerlink" href="#63" title="Permanent link">&para;</a></h4>
+<p>混合专家模型（MoE）由于其固有的稀疏性和复杂的路由机制，在训练过程中可能比传统的稠密模型更容易出现不稳定性，尤其是在对预训练模型进行微调时，更容易发生过拟合现象。模型的稀疏性意味着在每个训练步骤中只有一部分参数被激活，这种特性使得模型对训练数据的随机性以及参数的初始化更加敏感，从而可能导致训练过程中的不稳定性。</p>
+<p>为了应对MoE模型的训练不稳定性问题，研究人员提出了多种解决方案：</p>
+<p>简化路由策略：Switch Transformer是一种MoE架构的变体，它通过将每个输入token仅路由到一个最相关的专家（即Top-1路由）来简化路由策略。这种简化可以在一定程度上提高训练的稳定性，同时保持模型性能。</p>
+<p>引入额外的损失项：在训练过程中，可以引入额外的损失项来鼓励专家之间的负载均衡，并防止门控网络过早地偏向某些特定的专家。例如，Switch Transformer就使用了额外的辅助损失来提高训练的稳定性。</p>
+<p>采用特定的初始化方案：合适的参数初始化对于训练深度神经网络至关重要，对于MoE模型也不例外。一般来说会设计专门的初始化方案，以帮助稳定MoE模型的训练过程，尤其是在扩展到大量专家的情况下。</p>
+<p>使用软路由而非硬路由：传统的MoE实现通常使用硬路由，即每个token被确定性地分配给一个或几个专家。而软路由则允许token以一定的权重激活多个专家，这种更平滑的路由方式可以提高训练的稳定性。</p>
+<p>逐步增加专家数量：一些研究表明，在训练初期使用较少的专家，然后在训练过程中逐步增加专家数量，可以帮助模型更稳定地学习和扩展其能力。</p>
+<h4 id="64">6.4 推理效率<a class="headerlink" href="#64" title="Permanent link">&para;</a></h4>
+<p>尽管混合专家模型（MoE）在推理时通常只激活一部分参数，从而降低了计算成本，但一个主要的挑战是所有专家网络的参数都需要加载到内存中。这导致MoE模型在推理时可能需要比相同激活参数量的稠密模型更高的内存需求。此外，门控网络的计算以及选择和激活特定专家的过程也会增加推理的开销。</p>
+<p>为了提高MoE模型的推理效率，研究人员正在探索多种策略：</p>
+<p>专家并行化和负载均衡：通过将不同的专家网络分布到多个计算设备上并行执行，可以显著提高推理的吞吐量。同时，有效的负载均衡策略可以确保所有计算资源得到充分利用，避免某些设备过载而其他设备空闲。</p>
+<p>模型压缩和量化：对MoE模型进行压缩（例如，通过剪枝不重要的参数或进行知识蒸馏）和量化（例如，将模型参数从高精度浮点数转换为低精度整数）可以显著减小模型大小并加快推理速度。</p>
+<p>动态专家激活：研究人员正在探索更智能的门控机制，这些机制可以根据输入token的特性更精确地选择需要激活的专家，从而进一步减少不必要的计算。</p>
+<p>专家缓存和预加载：对于某些应用场景，可以将常用的专家网络预加载到内存中，或者在推理过程中缓存已经激活过的专家，以减少从存储器加载参数的延迟。</p>
+<p>硬件优化：针对MoE架构特点进行硬件优化，例如设计专门的硬件加速器，可以显著提高MoE模型的推理效率。</p>
+<h3 id="7-moe">7. MoE架构在大语言模型中的最新研究<a class="headerlink" href="#7-moe" title="Permanent link">&para;</a></h3>
+<h4 id="71">7.1 最近几年的重要研究论文概述<a class="headerlink" href="#71" title="Permanent link">&para;</a></h4>
+<p>近年来，混合专家模型（MoE）在大语言模型（LLMs）领域取得了显著的进展，涌现出许多重要的研究论文。2021年，Google提出的Switch Transformers展示了将MoE架构扩展到万亿参数规模的潜力，通过简单的稀疏性实现了高效的模型扩展。在路由策略方面，2022年NeurIPS上提出的"Mixture-of-Experts with Expert Choice Routing"引入了一种新颖的路由算法，该算法允许专家选择tokens而不是tokens选择专家，从而实现了更好的负载均衡和训练效率。</p>
+<p>2023年，Mistral AI发布了Mixtral 8x7B，这是一款高质量的稀疏MoE模型，在大多数基准测试中都优于Llama 2 70B，并且具有更快的推理速度，引起了广泛关注。2024年，DeepSeek-MoE模型采用了细粒度的专家分割技术和专家选择路由算法，进一步提升了MoE模型的性能。</p>
+<p>最近在arXiv上发表的一些研究论文也值得关注，例如关于扩展MoE语言模型的scaling laws的研究，关于将稠密LLMs转换为MoE的研究，以及关于在资源受限环境下训练300B参数MoE LLM的研究。此外，还有对MoE的算法、理论和应用进行全面综述的论文。</p>
+<p>在ACL 2024和NeurIPS 2024上，也涌现了许多关于MoE架构的最新研究进展。这些研究包括MoE LLMs的参数压缩方法，如D2-MoE和MC-MoE，旨在降低模型大小和内存占用。还有关于MoE LLMs的专家剪枝和跳过技术的研究，以提高推理效率。针对MoE LLMs的unlearning方法（UOE）也被提出，用于从模型中移除特定知识而不影响其通用能力。此外，研究人员还在探索将MoE架构应用于多模态LLMs，例如CuMo模型，该模型将MoE融入视觉编码器和LLM中，以提升多模态任务的性能。针对细粒度MoE模型的推理框架（IFMoE）也被提出，旨在提高推理的延迟和吞吐量。最后，Loss-Free Balancing作为一种无需辅助损失的负载均衡策略，也被提出以解决MoE模型中常见的负载不均衡问题。</p>
+<h4 id="72">7.2 模型规模、训练方法和性能表现<a class="headerlink" href="#72" title="Permanent link">&para;</a></h4>
+<p>最新的混合专家模型（MoE）已经达到了惊人的规模，参数量从数千亿到万亿不等。这些模型通常通过联合训练专家网络和门控网络的方式进行训练，并依赖于大规模的数据集来学习丰富的语言表示和专门的知识。</p>
+<p>在性能表现方面，MoE模型在各种自然语言处理基准测试中都展现出卓越的性能，通常能够超越相同计算成本的稠密模型。例如，Mistral AI的Mixtral 8x7B模型在包括语言理解、数学和代码生成等多个方面都优于参数量更大的Llama 2 70B模型。另一款引人注目的模型是DeepSeek-V3，它在某些基准测试中甚至能够与Llama 3.1相媲美，但其训练所需的计算资源却减少了11倍。这些结果充分证明了MoE架构在提高模型性能和效率方面的潜力。</p>
+<h4 id="73">7.3 面临的挑战和最新的解决方案<a class="headerlink" href="#73" title="Permanent link">&para;</a></h4>
+<p>尽管混合专家模型（MoE）在大语言模型中取得了显著的成功，但仍然面临着一些挑战，包括训练过程中的不稳定性、专家之间的负载不均衡、分布式训练和推理过程中的通信开销，以及推理效率的优化等问题。</p>
+<p>针对这些挑战，最新的研究工作致力于开发更有效的路由算法、更精细的负载均衡策略、更高效的模型压缩和加速技术。例如，D2-MoE和MC-MoE等方法专注于对MoE LLMs的参数进行压缩，以降低模型大小和内存需求。UOE框架则专门为MoE LLMs设计了unlearning方法，用于在不影响模型通用能力的情况下移除特定的知识。IFMoE旨在提高细粒度MoE模型的推理效率，通过优化的并行机制和推测性解码来减少延迟和提高吞吐量。Loss-Free Balancing提供了一种无需引入额外辅助损失即可实现负载均衡的策略，通过动态调整专家偏差来保证专家负载的均匀分布。这些最新的研究成果表明，研究社区正积极致力于克服MoE架构的局限性，并使其更适用于广泛的应用场景。</p>
+<h3 id="8-moe">8. MoE架构的未来发展趋势<a class="headerlink" href="#8-moe" title="Permanent link">&para;</a></h3>
+<h4 id="81">8.1 与其他先进技术的结合<a class="headerlink" href="#81" title="Permanent link">&para;</a></h4>
+<p>混合专家模型（MoE）在未来有望与多模态学习等其他先进技术进行更深入的结合，从而创建出能够处理和集成来自文本、图像、音频等多种输入类型信息的更强大的模型。例如，CuMo模型就是一个将MoE架构融入视觉编码器和大语言模型的实例，旨在提升模型在多模态任务上的性能。此外，研究人员也在积极探索将MoE应用于强化学习领域，以期提高智能体的决策能力和任务执行效率。这些结合有望充分发挥MoE在扩展模型容量和提高计算效率方面的优势，并将其应用于更广泛的人工智能任务中。</p>
+<h4 id="82">8.2 新的路由算法的探索<a class="headerlink" href="#82" title="Permanent link">&para;</a></h4>
+<p>未来，针对混合专家模型（MoE）的研究将持续探索和开发更高效、更灵活的路由算法，以期实现更好的负载均衡和更高的模型性能。例如，动态路由算法可能会根据实时的专家负载水平和任务需求来灵活地重新分配任务，从而更有效地利用模型资源。此外，专家选择路由和基于亲和性的主动选择路由等更先进的路由策略也可能是未来研究的重要方向。</p>
+<h4 id="83">8.3 在多模态模型和强化学习等领域的应用潜力<a class="headerlink" href="#83" title="Permanent link">&para;</a></h4>
+<p>混合专家模型（MoE）在处理多模态数据和提升强化学习智能体性能方面展现出了巨大的应用潜力。通过让不同的专家专注于处理不同模态的数据（例如，文本、图像、音频），MoE模型可以更有效地理解和整合来自多个来源的信息。在强化学习中，MoE可以用于构建具有多个专门策略或行为的智能体，每个专家都可以负责处理环境的不同状态或执行不同的动作。此外，分层MoE结构可能在处理复杂的输入和提高特定任务的性能方面表现出色。</p>
+<h3 id="9">9. 总结<a class="headerlink" href="#9" title="Permanent link">&para;</a></h3>
+<p>混合专家模型（MoE）架构通过巧妙地组合多个专门的专家网络，并利用门控机制实现对计算资源的高效分配，已经成为扩展大语言模型（LLMs）的关键技术。MoE在提高LLMs的性能、效率和可扩展性方面发挥了至关重要的作用。尽管如此，MoE架构在实际应用中仍然面临着负载均衡、通信开销和训练稳定性等挑战。然而，最新的研究工作正积极致力于开发创新的解决方案，例如更先进的路由算法、更有效的负载均衡策略以及模型压缩和加速技术，以克服这些障碍。展望未来，MoE架构在LLM的发展中将继续扮演重要的角色，并且有望与其他先进的AI技术（如多模态学习和强化学习）进行更深入的融合，开辟新的应用领域。对新的路由算法的探索以及在更广泛的应用领域（包括多模态学习和强化学习）的潜力挖掘，将是未来MoE研究的重要方向。</p>
+<h5 id="1moe">表1：主要MoE架构的比较<a class="headerlink" href="#1moe" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th>架构名称</th>
+<th>关键特性</th>
+<th>路由机制</th>
+<th>负载均衡策略</th>
+<th>优点</th>
+<th>缺点/挑战</th>
+<th>示例模型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sparsely-Gated MoE</td>
+<td>稀疏门控</td>
+<td>Noisy Top-K</td>
+<td>辅助损失</td>
+<td>高容量，低推理成本</td>
+<td>训练不稳定性</td>
+<td>Switch Transformer, GShard, Mixtral</td>
+</tr>
+<tr>
+<td>Switch Transformer</td>
+<td>Top-1路由</td>
+<td>Top-1</td>
+<td>辅助损失，容量因子</td>
+<td>路由计算和通信成本低</td>
+<td>需要仔细处理负载均衡</td>
+<td>Switch Transformer</td>
+</tr>
+<tr>
+<td>Mixtral 8x7B</td>
+<td>Top-2路由，8个7B专家</td>
+<td>Softmax over Top-2</td>
+<td>容量因子</td>
+<td>强大的性能，快速推理</td>
+<td>内存需求高</td>
+<td>Mixtral 8x7B</td>
+</tr>
+<tr>
+<td>Expert Choice Routing</td>
+<td>专家选择tokens</td>
+<td>专家选择Top-K</td>
+<td>容量限制</td>
+<td>更好的负载均衡，每个token可被不同数量专家处理</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>DeepSeek MoE</td>
+<td>细粒度专家分割，共享专家隔离</td>
+<td>专家选择</td>
+<td>无辅助损失</td>
+<td>进一步促进专家专业化，捕获通用知识</td>
+<td></td>
+<td>DeepSeek-MoE</td>
+</tr>
+<tr>
+<td>Mixture of Tokens (MoT)</td>
+<td>混合tokens后馈送到专家</td>
+<td>混合tokens</td>
+<td></td>
+<td>提高训练稳定性和专家利用率</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Hierarchical MoE</td>
+<td>多层门控网络</td>
+<td>多层路由</td>
+<td></td>
+<td>更复杂的路由决策，多层次的特征学习</td>
+<td></td>
+<td>Meta AI's NLLB-200</td>
+</tr>
+</tbody>
+</table>
+<h5 id="2moe">表2：MoE模型与稠密模型的性能比较<a class="headerlink" href="#2moe" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th>模型名称</th>
+<th>架构类型</th>
+<th>总参数量</th>
+<th>激活参数量 (MoE)</th>
+<th>关键性能指标</th>
+<th>训练计算量 (估计)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mixtral 8x7B</td>
+<td>MoE</td>
+<td>~470亿</td>
+<td>~130亿</td>
+<td>在大多数基准测试中优于Llama 2 70B</td>
+<td></td>
+</tr>
+<tr>
+<td>Llama 2 70B</td>
+<td>稠密</td>
+<td>700亿</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>GPT-3.5</td>
+<td>稠密</td>
+<td>1750亿</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>DeepSeek-V3</td>
+<td>MoE</td>
+<td>~2360亿</td>
+<td>~210亿</td>
+<td>在某些方面优于Llama 3.1，但训练计算量少11倍</td>
+<td></td>
+</tr>
+<tr>
+<td>Switch-XXL</td>
+<td>MoE</td>
+<td>3950亿</td>
+<td></td>
+<td>在100,000步后，负对数困惑度优于FLOP匹配的T5</td>
+<td></td>
+</tr>
+<tr>
+<td>Switch-C</td>
+<td>MoE</td>
+<td>1.571万亿</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>GShard 137B</td>
+<td>MoE</td>
+<td>1365亿</td>
+<td>216亿</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>GLaM (64B/64E)</td>
+<td>MoE</td>
+<td>1.2万亿</td>
+<td>966亿</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>DeepSeekMoE 145B</td>
+<td>MoE</td>
+<td>1446亿</td>
+<td>222亿</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 Datawhale Unlock-DeepSeek Team
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "announce.dismiss", "navigation.tracking", "navigation.tabs", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script></body>
+</html>
