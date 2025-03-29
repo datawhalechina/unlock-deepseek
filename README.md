@@ -42,58 +42,58 @@
 
 ### §1 MoE: DeepSeek 所坚持的架构
 
-- [x] #### 	&emsp;1.1 MoE 简介 @姜舒凡
+- [x]  	&emsp;1.1 MoE 简介 @姜舒凡
 
-- [ ] #### 	&emsp;1.2 MoE 结构的代码实现
+- [ ]  	&emsp;1.2 MoE 结构的代码实现
 
-- [x] #### 	&emsp;1.3 DeepSeek MoE @姜舒凡
+- [x]  	&emsp;1.3 DeepSeek MoE @姜舒凡
 
 ### 	§2 Reasoning: DeepSeek-R1 的核心能力
 
 #### 	&emsp;2.1 推理模型介绍
 
-- [ ] ##### 		&emsp;&emsp;2.1.1 LLM and Reasoning
+- [ ] 	&emsp;&emsp;2.1.1 LLM and Reasoning
 
-- [ ] ##### 		&emsp;&emsp;2.1.2 推理效果可视化
+- [ ] 	&emsp;&emsp;2.1.2 推理效果可视化
 
-- [ ] ##### 		&emsp;&emsp;2.1.3 OpenAI-o1与Inference Scaling Law
+- [ ] 	&emsp;&emsp;2.1.3 OpenAI-o1与Inference Scaling Law
 
-- [ ] ##### 		&emsp;&emsp;2.1.4 Qwen-QwQ and Qwen-QVQ
+- [ ] 	&emsp;&emsp;2.1.4 Qwen-QwQ and Qwen-QVQ
 
-- [ ] ##### 		&emsp;&emsp;2.1.5 DeepSeek-R1 and DeepSeek-R1-Zero
+- [ ] 	&emsp;&emsp;2.1.5 DeepSeek-R1 and DeepSeek-R1-Zero
 
-- [ ] ##### 		&emsp;&emsp;2.1.6 Kimi-K1.5
+- [ ] 	&emsp;&emsp;2.1.6 Kimi-K1.5
 
 #### 	&emsp;2.2 推理模型关键算法原理
 
-- [ ] ##### 		&emsp;&emsp;2.2.1 CoT，ToT，GoT
+- [ ] 	&emsp;&emsp;2.2.1 CoT，ToT，GoT
 
-- [x] ##### 		&emsp;&emsp;2.2.2 蒙特卡洛树搜索 @姜舒凡
+- [x] 	&emsp;&emsp;2.2.2 蒙特卡洛树搜索 @姜舒凡
 
-- [ ] ##### 		&emsp;&emsp;2.2.3 强化学习概念速览
+- [ ] 	&emsp;&emsp;2.2.3 强化学习概念速览
 
-- [ ] ##### 		&emsp;&emsp;2.2.4 DPO
+- [ ] 	&emsp;&emsp;2.2.4 DPO
 
-- [ ] ##### 		&emsp;&emsp;2.2.5 PPO
+- [ ] 	&emsp;&emsp;2.2.5 PPO
 
-- [ ] ##### 		&emsp;&emsp;2.2.6 GRPO
+- [ ] 	&emsp;&emsp;2.2.6 GRPO
 
 ### §3 Infra: DeepSeek 训练高效且便宜的关键
 
-- [ ] #### 	&emsp;3.1 FlashMLA
+- [ ]  	&emsp;3.1 FlashMLA
 
-- [ ] #### 	&emsp;3.2 DeepEP
+- [ ]  	&emsp;3.2 DeepEP
 
-- [ ] #### 	&emsp;3.3 DeepGEMM
+- [ ]  	&emsp;3.3 DeepGEMM
 
-- [ ] #### 	&emsp;3.4 DualPipe & EPLB
+- [ ]  	&emsp;3.4 DualPipe & EPLB
 
-- [ ] #### 	&emsp;3.5 3FS
+- [ ]  	&emsp;3.5 3FS
 
 
 
 ### §reproduction: 对于重要工作的代码复现
-- [x] #### 	&emsp;Datawhale-R1
+- [x]  	&emsp;Datawhale-R1
 
 - [ ] 
 
