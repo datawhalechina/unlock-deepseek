@@ -101,11 +101,11 @@
 
 ## 核心贡献者
 
-| [骆秀韬 - 项目负责人](https://github.com/anine09) | 似然实验室 |
-| [姜舒凡 - 项目负责人](https://github.com/Tsumugii24) | 华东理工大学 |
-| [邓恺俊](https://github.com/kedreamix) | 深圳大学 |
-| [陈嘉诺](https://github.com/Tangent-90C) | 广州大学 |
-| [林景豪](https://github.com/linjh1118)  | 智谱 |
+- [骆秀韬 - 项目负责人](https://github.com/anine09) （似然实验室）
+- [姜舒凡 - 项目负责人](https://github.com/Tsumugii24) （华东理工大学）
+- [邓恺俊](https://github.com/kedreamix) （深圳大学）
+- [陈嘉诺](https://github.com/Tangent-90C) （广州大学）
+- [林景豪](https://github.com/linjh1118)  （智谱）
 
 
 
