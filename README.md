@@ -40,72 +40,79 @@
 
 ## 目录
 
-### CH1 MoE: DeepSeek 所坚持的架构
+### §1 MoE: DeepSeek 所坚持的架构
 
-#### 	&emsp;1.1 MoE 简介
+- [x] #### 	&emsp;1.1 MoE 简介 @姜舒凡
 
-#### 	&emsp;1.2 MoE 结构的代码实现
+- [ ] #### 	&emsp;1.2 MoE 结构的代码实现
 
-#### 	&emsp;1.3 DeepSeek MoE
+- [x] #### 	&emsp;1.3 DeepSeek MoE @姜舒凡
 
-### CH2 Reasoning: DeepSeek-R1 的核心能力
+### 	§2 Reasoning: DeepSeek-R1 的核心能力
 
 #### 	&emsp;2.1 推理模型介绍
 
-##### 		&emsp;&emsp;2.1.1 LLM and Reasoning
+- [ ] ##### 		&emsp;&emsp;2.1.1 LLM and Reasoning
 
-##### 		&emsp;&emsp;2.1.2 推理效果可视化
+- [ ] ##### 		&emsp;&emsp;2.1.2 推理效果可视化
 
-##### 		&emsp;&emsp;2.1.3 OpenAI-o1与Inference Scaling Law
+- [ ] ##### 		&emsp;&emsp;2.1.3 OpenAI-o1与Inference Scaling Law
 
-##### 		&emsp;&emsp;2.1.4 Qwen-QwQ and Qwen-QVQ
+- [ ] ##### 		&emsp;&emsp;2.1.4 Qwen-QwQ and Qwen-QVQ
 
-##### 		&emsp;&emsp;2.1.5 DeepSeek-R1 and DeepSeek-R1-Zero
+- [ ] ##### 		&emsp;&emsp;2.1.5 DeepSeek-R1 and DeepSeek-R1-Zero
 
-##### 		&emsp;&emsp;2.1.6 Kimi-K1.5
+- [ ] ##### 		&emsp;&emsp;2.1.6 Kimi-K1.5
 
 #### 	&emsp;2.2 推理模型关键算法原理
 
-##### 		&emsp;&emsp;2.2.1 CoT，ToT，GoT
+- [ ] ##### 		&emsp;&emsp;2.2.1 CoT，ToT，GoT
 
-##### 		&emsp;&emsp;2.2.2 蒙特卡洛树搜索
+- [x] ##### 		&emsp;&emsp;2.2.2 蒙特卡洛树搜索 @姜舒凡
 
-##### 		&emsp;&emsp;2.2.3 强化学习概念速览
+- [ ] ##### 		&emsp;&emsp;2.2.3 强化学习概念速览
 
-##### 		&emsp;&emsp;2.2.4 DPO
+- [ ] ##### 		&emsp;&emsp;2.2.4 DPO
 
-##### 		&emsp;&emsp;2.2.5 PPO
+- [ ] ##### 		&emsp;&emsp;2.2.5 PPO
 
-##### 		&emsp;&emsp;2.2.6 GRPO
+- [ ] ##### 		&emsp;&emsp;2.2.6 GRPO
 
-### CH3 Infra: DeepSeek 训练高效且便宜的关键
+### §3 Infra: DeepSeek 训练高效且便宜的关键
 
-#### 	&emsp;3.1 FlashMLA
+- [ ] #### 	&emsp;3.1 FlashMLA
 
-#### 	&emsp;3.2 DeepEP
+- [ ] #### 	&emsp;3.2 DeepEP
 
-#### 	&emsp;3.3 DeepGEMM
+- [ ] #### 	&emsp;3.3 DeepGEMM
 
-#### 	&emsp;3.4 DualPipe & EPLB
+- [ ] #### 	&emsp;3.4 DualPipe & EPLB
 
-#### 	&emsp;3.5 3FS
+- [ ] #### 	&emsp;3.5 3FS
 
 
-## 贡献者名单
 
-| 姓名   | 职责          | 简介       |
-| :----- | :------------ | :--------- |
-| [骆秀韬](https://github.com/anine09) | 项目负责人    | 似然实验室 |
-| [姜舒凡](https://github.com/Tsumugii24) | 项目负责人    | 华东理工大学 |
-| [陈嘉诺](https://github.com/Tangent-90C) | 负责Infra部分 |  广州大学   |
-| [林景豪](https://github.com/linjh1118) | GRPO 算法解读 |     智谱       |
-| [邓恺俊](https://github.com/kedreamix) | Kimi-K1.5论文解读 | 深圳大学 |
-| [刘洋]() | MCTS 算法解读 |            |
+### §reproduction: 对于重要工作的代码复现
+- [x] #### 	&emsp;Datawhale-R1
+
+- [ ] 
+
+
+
+## 核心贡献者
+
+| [骆秀韬 - 项目负责人](https://github.com/anine09) | 似然实验室 |
+| [姜舒凡 - 项目负责人](https://github.com/Tsumugii24) | 华东理工大学 |
+| [邓恺俊](https://github.com/kedreamix) | 深圳大学 |
+| [陈嘉诺](https://github.com/Tangent-90C) | 广州大学 |
+| [林景豪](https://github.com/linjh1118)  | 智谱 |
+
+
 
 ## 参与贡献
 
 - 如果你发现了一些问题，可以提Issue进行反馈
-- 如果你想参与贡献本项目，欢迎提Pull request
+- 如果你想参与贡献本项目，欢迎提Pull request，请遵循fork-pr规范
 
 ## 提交规范
 - feat: 用于新功能（例如，feat: 添加新的 AI 模型）
