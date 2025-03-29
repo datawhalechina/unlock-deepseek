@@ -30,9 +30,9 @@
 
 我们将 DeepSeek-R1 及其系列工作拆分为三个重要部分：
 
-- MoE
-- Reasoning
-- Infra
+- **MoE**
+- **Reasoning**
+- **Infra**
 
 与大众的关注性价比优势不同，我们关注 DeepSeek 在实践 AGI 之路的创新性工作，致力于将 DeepSeek 现有公开工作细分拆解，向更广泛的 AI 研究爱好者讲述清楚其中的创新方法细节，同时我们会对比介绍同期其他类似工作（如 Kimi-K1.5），呈现 AGI 之路的不同可能性
 
@@ -40,34 +40,55 @@
 
 ## 目录
 
-1. MoE: DeepSeek 所坚持的架构
+### CH1 MoE: DeepSeek 所坚持的架构
 
-   1. MoE 简介
-   2. MoE 结构的代码实现
-   3. DeepSeek MoE
+#### 	1.1 MoE 简介
 
-2. Reasoning: DeepSeek-R1 的核心能力
+#### 	1.2 MoE 结构的代码实现
 
-   1. 推理模型介绍
-      1. LLM and Reasoning
-      2. 推理效果可视化
-      3. OpenAI-o1与Inference Scaling Law
-      4. Qwen-QwQ and Qwen-QVQ
-      5. DeepSeek-R1 and DeepSeek-R1-Zero
-      6. Kimi-K1.5
+#### 	1.3 DeepSeek MoE
 
-   2. 推理模型关键算法原理
-      1. CoT，ToT，GoT
-      2. 蒙特卡洛树搜索
-      3. 强化学习概念速览
-      4. DPO、PPO、GRPO
-      
-3. Infra: DeepSeek 训练高效且便宜的关键
-   - FlashMLA
-   - DeepEP
-   - DeepGEMM
-   - DualPipe & EPLB
-   - 3FS
+### CH2 Reasoning: DeepSeek-R1 的核心能力
+
+#### 	2.1 推理模型介绍
+
+##### 		2.1.1 LLM and Reasoning
+
+##### 		2.1.2 推理效果可视化
+
+##### 		2.1.3 OpenAI-o1与Inference Scaling Law
+
+##### 		2.1.4 Qwen-QwQ and Qwen-QVQ
+
+##### 		2.1.5 DeepSeek-R1 and DeepSeek-R1-Zero
+
+##### 		2.1.6 Kimi-K1.5
+
+#### 	2.2 推理模型关键算法原理
+
+##### 		2.2.1 CoT，ToT，GoT
+
+##### 		2.2.2 蒙特卡洛树搜索
+
+##### 		2.2.3 强化学习概念速览
+
+##### 		2.2.4 DPO
+
+##### 		2.2.5 PPO
+
+##### 		2.2.6 GRPO
+
+### CH3 Infra: DeepSeek 训练高效且便宜的关键
+
+#### 	3.1 FlashMLA
+
+#### 	3.2 DeepEP
+
+#### 	3.3 DeepGEMM
+
+#### 	3.4 DualPipe & EPLB
+
+#### 	3.5 3FS
 
 
 ## 贡献者名单
@@ -87,17 +108,33 @@
 - 如果你想参与贡献本项目，欢迎提Pull request
 
 ## 提交规范
-feat: 用于新功能（例如，feat: 添加新的 AI 模型）
-fix: 用于错误修复（例如，fix: 解决内存泄漏问题）
-docs: 用于文档更新（例如，docs: 更新贡献指南）
-style: 用于代码风格变更（例如，style: 重构代码格式）
-refactor: 用于代码重构（例如，refactor: 优化数据处理）
-test: 用于添加或更新测试（例如，test: 为新功能添加单元测试）
-chore: 用于维护任务（例如，chore: 更新依赖项）
+- feat: 用于新功能（例如，feat: 添加新的 AI 模型）
+- fix: 用于错误修复（例如，fix: 解决内存泄漏问题）
+- docs: 用于文档更新（例如，docs: 更新贡献指南）
+- style: 用于代码风格变更（例如，style: 重构代码格式）
+- refactor: 用于代码重构（例如，refactor: 优化数据处理）
+- test: 用于添加或更新测试（例如，test: 为新功能添加单元测试）
+- chore: 用于维护任务（例如，chore: 更新依赖项）
 
 
 ## 致谢
-我们衷心感谢以下开源资源和帮助，使我们能够构建这个项目：[DeepSeek](https://github.com/deepseek-ai/DeepSeek-R1), [Open-R1](https://github.com/huggingface/open-r1), [trl](https://github.com/huggingface/trl), [mini-deepseek-r1](https://www.philschmid.de/mini-deepseek-r1)（我们的初始代码库），[TinyZero](https://github.com/Jiayi-Pan/TinyZero)，[flash-attn](https://github.com/Dao-AILab/flash-attention)，[modelscope](https://github.com/modelscope/modelscope)，[vllm](https://github.com/vllm-project/vllm)。
+我们衷心感谢以下开源工作，使我们能够构建这个项目：
+
+[DeepSeek](https://github.com/deepseek-ai/DeepSeek-R1)
+
+[Open-R1](https://github.com/huggingface/open-r1)
+
+[trl](https://github.com/huggingface/trl)
+
+[mini-deepseek-r1](https://www.philschmid.de/mini-deepseek-r1)
+
+[TinyZero](https://github.com/Jiayi-Pan/TinyZero)
+
+[flash-attn](https://github.com/Dao-AILab/flash-attention)
+
+[modelscope](https://github.com/modelscope/modelscope)
+
+[vllm](https://github.com/vllm-project/vllm)
 
 
 
