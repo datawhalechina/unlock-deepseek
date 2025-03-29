@@ -31,8 +31,8 @@
 我们将 DeepSeek-R1 及其系列工作拆分为三个重要部分：
 
 - MoE
-- Reasoning Models
-- 关键要素 Keys（Data、Infra、...）
+- Reasoning
+- Infra
 
 与大众的关注性价比优势不同，我们关注 DeepSeek 在实践 AGI 之路的创新性工作，致力于将 DeepSeek 现有公开工作细分拆解，向更广泛的 AI 研究爱好者讲述清楚其中的创新方法细节，同时我们会对比介绍同期其他类似工作（如 Kimi-K1.5），呈现 AGI 之路的不同可能性
 
@@ -42,11 +42,11 @@
 
 1. MoE: DeepSeek 所坚持的架构
 
-   1. DeepSeek-R1 蒸馏模型（Qwen）的部署（self-llm/DeepSeek-R1-Distill-Qwen）
-   2. MoE 历史脉络回顾
-   3. MoE 从 0 实现（tiny-universe/Tiny MoE）
-   4. [多个小节] DeepSeek 模型中的 MoE 设计解读（带实现）
-2. Reasoning Models: DeepSeek-R1 的关键技术
+   1. MoE 简介
+   2. MoE 结构的代码实现
+   3. DeepSeek MoE
+
+2. Reasoning: DeepSeek-R1 的核心能力
 
    1. 推理模型介绍
       1. LLM and Reasoning
@@ -55,28 +55,27 @@
       4. Qwen-QwQ and Qwen-QVQ
       5. DeepSeek-R1 and DeepSeek-R1-Zero
       6. Kimi-K1.5
-   2. 推理模型关键算法原理（`2.1 推理模型介绍`里涉及的技术尽量都覆盖到）
+
+   2. 推理模型关键算法原理
       1. CoT，ToT，GoT
-      2. 蒙特卡洛树搜索 MCTS
+      2. 蒙特卡洛树搜索
       3. 强化学习概念速览
       4. DPO、PPO、GRPO
-      5. ...
-3. [实验性] Keys: DeepSeek 为什么便宜又好用
+      
+3. Infra: DeepSeek 训练高效且便宜的关键
+   - FlashMLA
+   - DeepEP
+   - DeepGEMM
+   - DualPipe & EPLB
+   - 3FS
 
-   由于缺失大量资料，这部分只能尽力而为
-
-   - Data
-   - Infra
-   - Trick
-   - Distill
-   - ...
 
 ## 贡献者名单
 
 | 姓名   | 职责          | 简介       |
 | :----- | :------------ | :--------- |
 | [骆秀韬](https://github.com/anine09) | 项目负责人    | 似然实验室 |
-| [姜舒凡]() | 项目负责人    |            |
+| [姜舒凡](https://github.com/Tsumugii24) | 项目负责人    | 华东理工大学 |
 | [陈嘉诺](https://github.com/Tangent-90C) | 负责Infra部分 |  广州大学   |
 | [林景豪](https://github.com/linjh1118) | GRPO 算法解读 |     智谱       |
 | [邓恺俊](https://github.com/kedreamix) | Kimi-K1.5论文解读 | 深圳大学 |
@@ -84,9 +83,17 @@
 
 ## 参与贡献
 
-- 如果你发现了一些问题，可以提Issue进行反馈，如果提完没有人回复你可以联系[保姆团队](https://github.com/datawhalechina/DOPMC/blob/main/OP.md)的同学进行反馈跟进~
-- 如果你想参与贡献本项目，可以提Pull request，如果提完没有人回复你可以联系[保姆团队](https://github.com/datawhalechina/DOPMC/blob/main/OP.md)的同学进行反馈跟进~
-- 如果你对 Datawhale 很感兴趣并想要发起一个新的项目，请按照[Datawhale开源项目指南](https://github.com/datawhalechina/DOPMC/blob/main/GUIDE.md)进行操作即可~
+- 如果你发现了一些问题，可以提Issue进行反馈
+- 如果你想参与贡献本项目，欢迎提Pull request
+
+## 提交规范
+feat: 用于新功能（例如，feat: 添加新的 AI 模型）
+fix: 用于错误修复（例如，fix: 解决内存泄漏问题）
+docs: 用于文档更新（例如，docs: 更新贡献指南）
+style: 用于代码风格变更（例如，style: 重构代码格式）
+refactor: 用于代码重构（例如，refactor: 优化数据处理）
+test: 用于添加或更新测试（例如，test: 为新功能添加单元测试）
+chore: 用于维护任务（例如，chore: 更新依赖项）
 
 
 ## 致谢
@@ -103,6 +110,6 @@
 
 ## LICENSE
 
-`<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey" />``</a><br />`本作品采用`<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">`知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议`</a>`进行许可。
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey" /></a><br />本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。
 
 *注：默认使用CC 4.0协议，也可根据自身项目情况选用其他协议*

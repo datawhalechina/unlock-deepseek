@@ -74,7 +74,7 @@ Due to the lack of extensive documentation, this section can only be approached 
 | Name         | Role                | Bio       |
 | :----------- | :------------------ | :-------- |
 | [XiuTao Luo](https://github.com/anine09) | Project Leader    | SiLiang Lab |
-| [ShuFan Jiang]() | Project Leader    |            |
+| [ShuFan Jiang](https://github.com/Tsumugii24) | Project Leader    | East China University of Science and Technology |
 | [JiaNuo Chen](https://github.com/Tangent-90C) | Responsible for Infra Part | Guangzhou University |
 | [JingHao Lin](https://github.com/linjh1118) | Interpreting GRPO Algorithm | Zhipu.AI |
 | [Kaijun Deng](https://github.com/kedreamix) | Kimi-K1.5 Paper Explanation | Shenzhen University |
